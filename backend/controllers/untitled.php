@@ -16,8 +16,8 @@ use backend\models\ProductImages;
  * ProductController implements the CRUD actions for Product model.
  */
 class ProductController extends Controller
-{
-    /**
+{INSERT INTO `product` (`productId`, `productName`, `quantity`, `unitPrice`, `discount`, `imagePath`, `createdBy`, `createdAt`) VALUES ('1', '500Ml', '100', '100', '0', 'uploads/7d0dffc318edf404df29.jpg', '1', current_timestamp());
+    /**uploads/7d0dffc318edf404df29.jpg
      * {@inheritdoc}
      */
     public function behaviors()

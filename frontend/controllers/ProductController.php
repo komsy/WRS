@@ -48,24 +48,28 @@ class ProductController extends \yii\web\Controller
     public function createOrdersitems($orderId,$productId,$quantity,$total,$withCan,$userId)
     {
         $checkorderi = Orderitems::find()->where(['productId'=>$productId])->one();
+        $model = New Orderitems();
         if(empty($checkorderi)){
 
             if($withCan == "1" ){
-            $withCan = Cans::find()->select('amount')->where('productId=:productId')->addParams([':productId' => $productId])->one(); 
-            $total = $withCan->amount+$total;
-            $data = ['Orderitems'=>['orderId'=>$orderId,'productId'=>$productId,'withCan'=>$withCan->amount,'quantity'=>$quantity,'total'=>$total]];
+            $withCan = $quantity+$model->withCan;
+            $withCa = Cans::find()->select('amount')->where('productId=:productId')->addParams([':productId' => $productId])->one(); 
+            $total = ($withCa->amount)*$quantity+$total;
+            $data = ['Orderitems'=>['orderId'=>$orderId,'userId'=>$userId,'productId'=>$productId,'withCan'=>$withCan,'quantity'=>$quantity,'total'=>$total]];
             /*var_dump($data); exit();*/
                 if($model->load($data) && $model->save()){
                     $total = Orderitems::find()->joinWith('order')->where('orderitems.orderId=:orderId')->addParams([':orderId' => $orderId])->sum('total'); 
+                    return $this->redirect(['product/index']);
                     /*$this->updateorder($orderId,$total,$userId);*/
                  }
                 return false;
             }
             else{
-                $data = ['Orderitems'=>['orderId'=>$orderId,'productId'=>$productId,'withCan'=>$withCan,'quantity'=>$quantity,'total'=>$total]];
+                $data = ['Orderitems'=>['orderId'=>$orderId,'userId'=>$userId,'productId'=>$productId,'withCan'=>$withCan,'quantity'=>$quantity,'total'=>$total]];
                 /*var_dump($data); exit();*/
                 if($model->load($data) && $model->save()){
                     $total = Orderitems::find()->joinWith('order')->where('orderitems.orderId=:orderId')->addParams([':orderId' => $orderId])->sum('total'); 
+                    return $this->redirect(['product/index']);
                    /* var_dump($total); exit();*/
                     /*$this->updateorder($orderId,$total,$userId);*/
                 }
@@ -74,9 +78,8 @@ class ProductController extends \yii\web\Controller
         }           
             
         else {
-            $quantity = $checkorderi->quantity+$quantity;
             $total = $checkorderi->total+$total;
-            $this->updateorderitems($checkorderi['orderItemsId'],$orderId,$productId,$quantity,$total,$withCan,$userId);
+            $this->updateorderitems($checkorderi['orderItemsId'],$orderId,$userId,$productId,$quantity,$total,$withCan,$userId);
         }
     }
 /*    public function createOrderitems($orderId,$productId,$quantity,$total,$withCan,$userId)
@@ -106,45 +109,49 @@ class ProductController extends \yii\web\Controller
         }   
     } 
 */
- /*   public function updateOrder($orderId,$total,$userId)
+    public function updateOrder($orderId,$total,$userId)
     {
         $id = $orderId;
-        $model = $this->findModel($id);
-        $data = ['Orders'=>['userId'=>$userId,'totalAmount'=>$total,'orderStatus'=>'New','createdBy'=>yii::$app->user->id]];
-        if ($model->load($data)){ /*
-            $model->totalAmount = $total;
-            $model->save();
-            return $this->redirect(['product/index']);
+        if (($model = Orders::findOne($id)) !== null) {
+        $data = ['Orders'=>['userId'=>$userId,'totalAmount'=>$total,'orderStatus'=>'Updated','createdBy'=>yii::$app->user->id]];
+            if ($model->load($data)){ 
+                $model->save();
+                return $this->redirect(['product/index']);
+            }
         }
-
         return false;
-    }*/
-    public function updateOrderItems($orderItemsId,$orderId,$productId,$quantity,$total,$withCan,$userId)
+    }
+    public function updateOrderItems($orderItemsId,$orderId,$userId,$productId,$quantity,$total,$withCan)
     {
         $id = $orderItemsId;
         $model = $this->findModel($id);
         if($withCan == "1" ){
-            $withCan = $withCan+$model->withCan;
-            $withCa = Cans::find()->select('amount')->where('productId=:productId')->addParams([':productId' => $productId])->one(); 
-            $total = $withCa->amount+$total;
-            $data = ['Orderitems'=>['orderId'=>$orderId,'productId'=>$productId,'withCan'=>$withCan,'quantity'=>$quantity,'total'=>$total]];
+            $withCa = Cans::find()->select('amount')->where('productId=:productId')->addParams([':productId' => $productId])->one();
+            $total = ($withCa->amount)*$quantity+$total;
+            $withCan = $quantity+$model->withCan;
+            $quantity = $model->quantity+$quantity;
+            
+            $data = ['Orderitems'=>['orderId'=>$orderId,'userId'=>$userId,'productId'=>$productId,'withCan'=>$withCan,'quantity'=>$quantity,'total'=>$total]];
                 if($model->load($data)){
 
-            /*var_dump($model); exit();*/
+            
             $model->save();
-                    $total = Orderitems::find()->joinWith('order')->where('orderitems.orderId=:orderId')->addParams([':orderId' => $orderId])->sum('total'); 
-                    return $this->redirect(['product/index']); 
-                    /*$this->updateorder($orderId,$total,$userId);*/
+                    $total = Orderitems::find()->joinWith('order')->where('orderitems.orderId=:orderId')->addParams([':orderId' => $orderId])->sum('total'); /*
+                    return $this->redirect(['product/index']); */
+                    $this->updateorder($orderId,$total,$userId);
                  }
                 return false;
             }
             else{
-                $data = ['Orderitems'=>['orderId'=>$orderId,'productId'=>$productId,'withCan'=>$withCan,'quantity'=>$quantity,'total'=>$total]];
-           
+                $withCan = $model->withCan;
+                $quantity = $model->quantity+$quantity;
+            
+                $data = ['Orderitems'=>['orderId'=>$orderId,'userId'=>$userId,'productId'=>$productId,'withCan'=>$withCan,'quantity'=>$quantity,'total'=>$total]];
+           /*var_dump($data); exit();*/
             if($model->load($data) && $model->save()){
-                $total = Orderitems::find()->joinWith('order')->where('orderitems.orderId=:orderId')->addParams([':orderId' => $orderId])->sum('total'); 
-               return $this->redirect(['product/index']); 
-                /*$this->updateorder($orderId,$total,$userId);*/
+                $total = Orderitems::find()->joinWith('order')->where('orderitems.orderId=:orderId')->addParams([':orderId' => $orderId])->sum('total'); /*
+               return $this->redirect(['product/index']); */
+                $this->updateorder($orderId,$total,$userId);
             }
             return false;
         } 
@@ -163,6 +170,10 @@ class ProductController extends \yii\web\Controller
     public function actionOrders()
     {
         return $this->render('orders');
+    } 
+    public function actionOrderitems()
+    {
+        return $this->render('orderitems');
     }    
   
 }

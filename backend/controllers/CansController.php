@@ -78,7 +78,7 @@ class CansController extends Controller
           $model->save();
 
 
-            return $this->redirect(['product/index']);
+            return $this->redirect(['cans/index']);
        }
        return $this->render('create', [
            'model' => $model,
@@ -108,7 +108,7 @@ class CansController extends Controller
     * @return mixed
     * @throws NotFoundHttpException if the model cannot be found
     */
-   public function actionDelete($id)
+   public function actionTrash($id)
    {
        $this->findModel($id)->delete();
        return $this->redirect(['index']);

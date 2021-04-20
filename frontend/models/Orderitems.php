@@ -3,12 +3,14 @@
 namespace frontend\models;
 
 use Yii;
+use common\models\User;
 
 /**
  * This is the model class for table "orderitems".
  *
  * @property int $orderItemsId
  * @property int $orderId
+ * @property int $userId
  * @property int $productId
  * @property int $withCan
  * @property int $quantity
@@ -16,6 +18,7 @@ use Yii;
  *
  * @property Product $product
  * @property Orders $order
+ * @property User $user
  */
 class Orderitems extends \yii\db\ActiveRecord
 {
@@ -33,10 +36,11 @@ class Orderitems extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['orderId', 'productId', 'withCan', 'quantity', 'total'], 'required'],
-            [['orderId', 'productId', 'withCan', 'quantity', 'total'], 'integer'],
+            [['orderId', 'userId', 'productId', 'withCan', 'quantity', 'total'], 'required'],
+            [['orderId', 'userId', 'productId', 'withCan', 'quantity', 'total'], 'integer'],
             [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['productId' => 'productId']],
             [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['orderId' => 'orderId']],
+            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
     }
 
@@ -48,6 +52,7 @@ class Orderitems extends \yii\db\ActiveRecord
         return [
             'orderItemsId' => 'Order Items ID',
             'orderId' => 'Order ID',
+            'userId' => 'User ID',
             'productId' => 'Product ID',
             'withCan' => 'With Can',
             'quantity' => 'Quantity',
@@ -74,8 +79,18 @@ class Orderitems extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Orders::className(), ['orderId' => 'orderId']);
     }
-     public function getCans()
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
     {
-        return $this->hasMany(Cans::className(), ['productId' => 'productId']);
+        return $this->hasOne(User::className(), ['id' => 'userId']);
+    }
+    public function getCans()
+    {
+       return $this->hasMany(Cans::className(), ['productId' => 'productId']);
     }
 }

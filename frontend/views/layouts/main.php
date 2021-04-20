@@ -40,8 +40,8 @@ AppAsset::register($this);
 
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {/*
-        if(\Yii::$app->user->can('Admin')) {*/
+    } else {
+        if(\Yii::$app->user->can('User')) {
         $menuItems [] = ['label' => 'Home', 'url' => ['/site/index'] ];
         $menuItems [] = ['label' => 'Customer', 'url' => ['/site/customers'] ];
         $menuItems [] = ['label' => 'Products', 'url' => ['/product/index'] ];
@@ -54,7 +54,19 @@ AppAsset::register($this);
                 'data-method'=>'post'
             ]
         ];  
-        
+       } 
+       elseif(\Yii::$app->user->can('Cashier')) {
+        $menuItems [] = ['label' => 'Orders', 'url' => ['/product/orderitems'] ];
+        $menuItems [] = ['label' => 'POS', 'url' => ['/cashier/index'] ];
+        $menuItems [] = ['label' => 'About', 'url' => ['/site/about'] ];
+        $menuItems [] = ['label' => 'Contact', 'url' => ['/site/contact'] ];
+        $menuItems[] = ['label' => 'Logout ('.Yii::$app->user->identity->username.')',
+            'url'=>['site/logout'],
+            'linkOptions'=>[
+                'data-method'=>'post'
+            ]
+        ];
+        }
     }
   
     echo Nav::widget([
@@ -64,21 +76,19 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
-
-   
+        <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+        </div>
         <?= $content ?>
     
 </div>
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="text-center">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
     </div>
 </footer>
 

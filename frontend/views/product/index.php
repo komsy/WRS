@@ -18,9 +18,9 @@ $products = Product::find()->joinWith('cans')->all();
 <div class="row ml-4 ">
 		
 	<?php foreach ($products as $product) {?>
-		<div class="col-md-6">
-		<div class="card mt-3 mb-3"> 
-		<div class="row ">
+		<div class="col-md-3" >
+		<div class="card mt-3 mb-3" > 
+		<div class="row " >
 		<aside class="col-sm-5 border-right">
 			<article class="gallery-wrap"> 
 			<div class="img-big-wrap">
@@ -32,7 +32,7 @@ $products = Product::find()->joinWith('cans')->all();
 			</article> <!-- gallery-wrap .end// -->
 		</aside>
 		<aside class="col-sm-7">
-			<article class="card-body p-5">
+			<article class="card-body p-1">
 				<h3 class="title mb-3"><?=$product->productName  ?></h3>
 
 			<p class="price-detail-wrap"> 
@@ -46,16 +46,8 @@ $products = Product::find()->joinWith('cans')->all();
 			  <dd><p>Description Here</p></dd>
 			</dl>
 			<dl class="param param-feature">
-			  <dt>Model#</dt>
-			  <dd>12345611</dd>
-			</dl>  <!-- item-property-hor .// -->
-			<dl class="param param-feature">
-			  <dt>Color</dt>
-			  <dd>Black and white</dd>
-			</dl>  <!-- item-property-hor .// -->
-			<dl class="param param-feature">
-			  <dt>Delivery</dt>
-			  <dd>Nairobi, Kimbo, and Meru</dd>
+			  <dt>Can#</dt>
+			  <dd>Each can at <?=$product->cans[0]->amount  ?></dd>
 			</dl>  <!-- item-property-hor .// -->
 
 			<hr>
@@ -65,7 +57,7 @@ $products = Product::find()->joinWith('cans')->all();
 						  <dt>Quantity: </dt>
 						  <dd>
 						  	<div class="form-group">
-								<input type="number" id="quantity_<?= $product->productId?>" name="name" placeholder="Number" class="form-control" style="width:150px;" autocomplete="off" tittle="number">
+								<input type="number" id="quantity_<?= $product->productId?>" name="name" placeholder="Number" class="form-control" style="width:100px;" autocomplete="off">
 							</div>
 						  </dd>
 						</dl>  <!-- item-property .// -->

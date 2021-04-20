@@ -93,12 +93,11 @@ AppAsset::register($this);
               </p>
             </a>
           </li>
-
           <li class="nav-item">
-            <a href="<?= Url::to(['user/index'])?>" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+            <a href="<?= Url::to(['product/pos'])?>" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Registered Users
+                Point of Sale
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
@@ -126,13 +125,29 @@ AppAsset::register($this);
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="<?= Url::to(['site/users'])?>" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
               <p>
-                User Management
+                User management
+                <i class="fas fa-angle-left right"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= Url::to(['site/cashiers'])?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cashiers</p>
+                <span class="right badge badge-danger">New</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= Url::to(['user/index'])?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Users</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -144,27 +159,15 @@ AppAsset::register($this);
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?= Url::to(['product/details'])?>" class="nav-link">
+                <a href="<?= Url::to(['product/orders'])?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Delivery Details</p>
+                  <p>Order Details</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="<?= Url::to(['product/records'])?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Delivery Record</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?= Url::to(['product/users'])?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Editors</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?= Url::to(['site/users'])?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Validation</p>
                 </a>
               </li>
             </ul>

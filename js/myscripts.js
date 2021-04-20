@@ -1,44 +1,5 @@
 
 //addorder
-$('.del').click(function(e){
-    e.preventDefault();
-    var id = $(this).attr('id');
-    
-    $.ajax({
-        url: baseUrl+"/site/user?id="+id,
-        type: 'GET',
-        dataType: 'json', // added data type
-        success: function(res) {
-            console.log(res);
-            alert(res);
-        }
-    });
-    
-    alert(' Delete selected?');
- });
-
-//addtocart
- $('.addtocart').click(function(e){
-    e.preventDefault();
-    var productid = $(this).attr('productid');
-    var userid = $(this).attr('userid');
-    var baseUrl = $(this).attr('baseUrl');
-    var quantity = $("#quantity_"+productid).val();
-    
-    $.ajax({
-        url: baseUrl+"/product/addtocart?productid="+productid+"&userid="+userid+"&quantity="+quantity,
-        type: 'GET',
-        dataType: 'json', // added data type
-        success: function(res) {
-            console.log(res);
-            alert(res);
-        }
-    });
-    
-    alert(productid+' and '+userid+' and '+quantity);
- });
-
-//addorder
 $('.order').click(function(e){
     e.preventDefault();
     var productId = $(this).attr('productId');
@@ -60,4 +21,42 @@ $('.order').click(function(e){
     });
     
     alert(' Save order with Total: '+total);
+ });
+
+//Cashier Delete POS
+$('.delete').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    var baseUrl = $(this).attr('baseUrl');
+    
+    $.ajax({
+       url: baseUrl+"/cashier/delete?id="+id,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            console.log(res);
+            alert(res);
+        }
+    });
+    
+    alert(' Delete selected?');
+ });
+
+//Cashier Delete POS
+$('.restore').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    var baseUrl = $(this).attr('baseUrl');
+    
+    $.ajax({
+       url: baseUrl+"/cashier/update?id="+id,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            console.log(res);
+            alert(res);
+        }
+    });
+    
+    alert(' Restore selected?');
  });

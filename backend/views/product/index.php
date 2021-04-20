@@ -59,11 +59,12 @@ $user = Product::find()->joinWith('createdBy0')->all();
                     <td> <?=$use->unitPrice ?> </td>
                     <td> <?=$use->discount ?> </td>
                     <td> <?=$use->createdBy0->username ?> </td>
-                    <td> <?=$use->createdAt ?> </td><td> <img src="<?= Yii::$app->request->baseUrl.'/'.$use->imagePath ?>" class="center" width="50px"  alt="Patient Image"> </td>
+                    <td> <?=$use->createdAt ?> </td><td> 
+                      <img src="<?= Yii::$app->request->baseUrl.'/'.$use->imagePath ?>" class="center" width="50px"  alt="Patient Image"> </td>
                     <td>
                      <a href="<?=Url::to(['product/update', 'id'=>$use->productId])?>"><button type="button" class="badge badge-pill btn-primary px-3 py-2 ">Edit</button></a>
-                     
-                      <a href="#" baseUrl="<?= Yii::$app->request->baseUrl?>" id="<?=$use->productId?>" class="badge badge-pill btn-danger px-3 py-2 trash"> Delete </a>
+                     <a href="#" baseUrl="<?= Yii::$app->request->baseUrl?>" id="<?=$use->productId?>" class="badge badge-pill btn-danger px-3 py-2 delete"> Delete </a>
+
                     </td>
                   </tr>               
                  <?php } ?>

@@ -42,13 +42,10 @@ $product = ArrayHelper::map(product::find()->all(), 'productId', 'productName');
 
                 <?= $form->field($model, 'discount')->textInput() ?>
 
-                <?= $form->field($model, 'imagePath')->fileInput() ?>
-
+                <?= $form->field($model, 'imagePath')->textInput() ?>
+                 <img src="<?= Yii::$app->request->baseUrl.'/'.$model->imagePath ?>" class="center" width="50px"  alt="Product Image"> 
                 <?= $form->field($model, 'createdBy')->textInput()->hiddenInput(['value' =>Yii::$app->user->id, 'readonly'=>true])->label(false) ?>
-                <h3 class="panel-title">Add Can</h3>
-                <?= $form->field($can, 'type') ?>
                 
-                <?= $form->field($can, 'amount') ?> 
                 </div> 
             </div>
             <div class="form-group">

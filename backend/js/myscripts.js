@@ -1,12 +1,12 @@
 
 //Delete cashier
-$('.delete').click(function(e){
+$('.delet').click(function(e){
     e.preventDefault();
     var id = $(this).attr('id');
     var baseUrl = $(this).attr('baseUrl');
     
     $.ajax({
-       url: baseUrl+"/site/delete?id="+id,
+       url: baseUrl+"/site/delet?id="+id,
         type: 'GET',
         dataType: 'json', // added data type
         success: function(res) {
@@ -38,13 +38,32 @@ $('.del').click(function(e){
  });
 
 //Delete Product
-$('.trash').click(function(e){
+$('.delete').click(function(e){
     e.preventDefault();
     var id = $(this).attr('id');
     var baseUrl = $(this).attr('baseUrl');
     
     $.ajax({
-       url: baseUrl+"/product/trash?id="+id,
+       url: baseUrl+"/product/delete?id="+id,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            console.log(res);
+            alert(res);
+        }
+    });
+    
+    alert(' Delete selected?');
+ });
+
+//Delete POS
+$('.deletd').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    var baseUrl = $(this).attr('baseUrl');
+    
+    $.ajax({
+       url: baseUrl+"/product/deletd?id="+id,
         type: 'GET',
         dataType: 'json', // added data type
         success: function(res) {

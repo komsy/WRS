@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = 'Update';
 	<section class="content pt-4">
 		<div class="user-update">
 
-		    <h1><?= Html::encode($this->title) ?><a href="<?= Url::to(['site/users'])?>" class="badge bg-danger p-2 text-white float-right">Back</a></h1>
+		    <h1><?= Html::encode($this->title) ?><a href="<?= Url::to(['user/index'])?>" class="badge bg-danger p-2 text-white float-right">Back</a></h1>
 
 		    <?= $this->render('_form', [
 		        'model' => $model,

@@ -8,6 +8,7 @@ use backend\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\AuthAssignment;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -35,14 +36,20 @@ class UserController extends Controller
      */
     public function actionIndex()
     {   
-        
+        $model = new AuthAssignment();
 
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        if ($model->load(Yii::$app->request->post()))
+        {
+         $model->save();
+        return $this->redirect(['user/index']);
+        } 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
@@ -76,7 +83,26 @@ class UserController extends Controller
             'model' => $model,
         ]);
     }
+/*    public function actionAuth()
+    {
+        return $this->render('auth');
+    } 
+    */
+    public function actionAuthAssignment()
+    {
+        $model = new \backend\models\AuthAssignment();
 
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                return;
+            }
+        }
+
+        return $this->render('authAssignment', [
+            'model' => $model,
+        ]);
+    }
     /**
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.

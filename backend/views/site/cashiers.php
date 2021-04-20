@@ -141,12 +141,18 @@ $user = Cashier::find()->joinWith('user')->all();
                     <td> <?=$list->cashierId ?> </td>
                     <td> <?=$list->fullName ?> </td>
                     <td> <?=$list->user->email ?> </td>
-                    <td> <?=$list->role ?> </td>
+                    <td class="text-center"> 
+                      <?php if($list->role == '1') 
+                        echo '<label class="py-2 px-3 badge btn-primary">Approved Cashier</label>';                      
+                        else
+                        echo '<label class="py-2 px-3 badge btn-danger">Not Approved</label>'; 
+                        ?>
+                    </td>
                     
                     <td>
                      <a href="<?=Url::to(['site/update', 'id'=>$list->cashierId])?>"><button type="button" class="badge badge-pill btn-primary px-3 py-2 ">Edit</button></a>
 
-                      <a href="#" baseUrl="<?= Yii::$app->request->baseUrl?>" id="<?=$list->cashierId?>" class="badge badge-pill btn-danger px-3 py-2 delete"> Delete </a>
+                      <a href="#" baseUrl="<?= Yii::$app->request->baseUrl?>" id="<?=$list->cashierId?>" class="badge badge-pill btn-danger px-3 py-2 delet"> Delete </a>
                     </td>
                   </tr>
                 <br>                 

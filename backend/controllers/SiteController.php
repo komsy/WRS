@@ -104,7 +104,7 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
-    public function actionUsers()
+    public function actionCashiers()
     {   
         $model = new Cashier();
         $searchModel = new \backend\models\CashierSearch();
@@ -113,9 +113,9 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()))
         {
          $model->save();
-        return $this->redirect(['site/users']);
+        return $this->redirect(['site/cashiers']);
         } 
-        return $this->render('users', [
+        return $this->render('cashiers', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'model' => $model,
@@ -179,7 +179,7 @@ class SiteController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelet($id)
     {
         $this->findModel($id)->delete();
 

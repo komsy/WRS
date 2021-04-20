@@ -20,7 +20,6 @@ $this->params['breadcrumbs'][] = 'Update';
 
 		    <?= $this->render('edit', [
 		        'model' => $model,
-		        'can' => $can,
 		    ]) ?>
 		</div>
 </section>

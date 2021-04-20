@@ -19,8 +19,12 @@ use Yii;
  * @property int $updated_at
  * @property string|null $verification_token
  *
+ * @property AuthAssignment[] $authAssignments
+ * @property AuthItem[] $itemNames
  * @property Cashier[] $cashiers
  * @property Customers[] $customers
+ * @property Orders[] $orders
+ * @property Product[] $products
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -69,6 +73,26 @@ class User extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[AuthAssignments]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuthAssignments()
+    {
+        return $this->hasMany(AuthAssignment::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[ItemNames]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItemNames()
+    {
+        return $this->hasMany(AuthItem::className(), ['name' => 'item_name'])->viaTable('auth_assignment', ['user_id' => 'id']);
+    }
+
+    /**
      * Gets query for [[Cashiers]].
      *
      * @return \yii\db\ActiveQuery
@@ -86,5 +110,25 @@ class User extends \yii\db\ActiveRecord
     public function getCustomers()
     {
         return $this->hasMany(Customers::className(), ['userId' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Orders]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrders()
+    {
+        return $this->hasMany(Orders::className(), ['userId' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Products]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['createdBy' => 'id']);
     }
 }

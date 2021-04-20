@@ -19,7 +19,9 @@ $use = ArrayHelper::map(User::find()->all(), 'id', 'username');
 
                     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'isBan') ?> 
+                    <?= $form->field($model, 'isBan') ?>
+
+                    <?= $form->field($model, 'status') ?> 
                     
                 <div class="form-group">
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
