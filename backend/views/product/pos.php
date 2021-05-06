@@ -9,7 +9,7 @@ use common\models\User;
 use backend\models\Pos;
 
 /* @var $this yii\web\View */
-$list = Pos::find()->where(['status'=>'0'])->all();
+$list = Pos::find()->orderBy(['posId'=>SORT_DESC])->where(['status'=>'0'])->all();
 ?> 
 
 <!--Main layout-->

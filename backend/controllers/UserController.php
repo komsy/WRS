@@ -103,6 +103,42 @@ class UserController extends Controller
             'model' => $model,
         ]);
     }
+        public function actionActivate($id)
+    {        
+        $checkstatus = User::find()->select('status')->where(['id'=>$id])->one();
+        if (($model = User::findOne($id)) !== null) {
+        if($checkstatus->status== "10"){
+        $data = ['User'=>['status'=>'9']];
+                if ($model->load($data) && $model->save()){
+                return $this->redirect(['user/index']);
+            }
+        }
+        else{
+                $data = ['User'=>['status'=>'10']];
+                if ($model->load($data) && $model->save()){
+                    return $this->redirect(['user/index']);
+                }
+                
+            }
+        }
+        return $this->renderAjax('activate', [
+            'use'=> $use
+        ]);
+
+        
+    }
+   /* public function actionActivate($id)
+    {
+        if (($model = User::findOne($id)) !== null) {
+        $data = ['User'=>['status'=>'10||9']];
+            if ($model->load($data)){ 
+                /*var_dump($model); exit();
+                $model->save();
+                return $this->redirect(['user/index']);
+            }
+        }
+        return false;
+    }*/
     /**
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.

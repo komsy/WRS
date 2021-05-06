@@ -19,9 +19,7 @@ $use = ArrayHelper::map(User::find()->all(), 'id', 'username');
 
                     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-                    <?= $form->field($model, 'isBan') ?>
-
-                    <?= $form->field($model, 'status') ?> 
+                    <?= $form->field($model, 'status')->textInput()->input('status', ['placeholder' => 'Enter either 9 or 10', 'data-toggle'=>"tooltip", 'title'=>"Enter either 9 or 10"]) ?> 
                     
                 <div class="form-group">
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>

@@ -18,8 +18,8 @@ $products = Product::find()->joinWith('cans')->all();
 <div class="row ml-4 ">
 		
 	<?php foreach ($products as $product) {?>
-		<div class="col-md-3" >
-		<div class="card mt-3 mb-3" > 
+		<div class="col-md-4" >
+		<div class="card mt-4 mb-4" > 
 		<div class="row " >
 		<aside class="col-sm-5 border-right">
 			<article class="gallery-wrap"> 

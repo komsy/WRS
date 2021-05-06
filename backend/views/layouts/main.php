@@ -24,8 +24,10 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" rel="stylesheet">
     <?php $this->head() ?>
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
 </head>
-<body>
+<body class="hold-transition sidebar-mini layout-fixed">
 <?php $this->beginBody() ?>
 
 <div class="wrap h-100 d-flex flex-column">
@@ -39,10 +41,7 @@ AppAsset::register($this);
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="<?= Url::to(['site/index'])?>" class="nav-link">Home</a>
       </li>
     </ul>
 
@@ -62,10 +61,10 @@ AppAsset::register($this);
     <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
+    <a href="<?= Url::to(['site/index'])?>" class="brand-link">
       <img src="<?= Yii::$app->request->baseUrl ?>/img/AdminLTELogo.png?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">Imperial</span>
     </a>
 
     <!-- Sidebar -->
@@ -76,7 +75,7 @@ AppAsset::register($this);
           <img src="<?= Yii::$app->request->baseUrl ?>/img/avatar5.png?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Komsy</a>
+          <a href="<?= Url::to(['site/index'])?>" class="d-block">Komsy</a>
         </div>
       </div>
 
@@ -94,7 +93,7 @@ AppAsset::register($this);
             </a>
           </li>
           <li class="nav-item">
-            <a href="<?= Url::to(['product/pos'])?>" class="nav-link active">
+            <a href="<?= Url::to(['product/pos'])?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Point of Sale
@@ -165,7 +164,7 @@ AppAsset::register($this);
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?= Url::to(['product/records'])?>" class="nav-link">
+                <a href="<?= Url::to(['delivery/records'])?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Delivery Record</p>
                 </a>
@@ -178,7 +177,8 @@ AppAsset::register($this);
     </div>
     <!-- /.sidebar -->
   </aside>
-            <?= $content ?>
+</div>
+     <?= $content ?>
      </div>   
      </div>    
 </div>

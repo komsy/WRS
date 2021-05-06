@@ -8,48 +8,50 @@ use backend\models\AuthAssignment;
 use backend\models\AuthItem;
 use backend\models\User;
 use yii\bootstrap4\Modal;
+use yii\widgets\ListView;
+
 
 /* @var $this yii\web\View */
-$use = ArrayHelper::map(User::find()->all(), 'id', 'username');
+$use = ArrayHelper::map(User::find()->orderBy(['id'=>SORT_DESC])->all(), 'id', 'username');
 $item = ArrayHelper::map(AuthItem::find()->all(), 'name', 'description');
-$user = User::find()->joinWith('authAssignments')->all();
+$user = AuthAssignment::find()->joinWith('user')->all();
 
 ?> 
-      <div class="modal fade" id="modal-default">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Add AuthAssignment</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="cashier">
-
-                <?php $form = ActiveForm::begin(); ?>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <?= $form->field($model, 'user_id')->dropDownList($use,['prompt'=>'Select New User']) ?>
-                        </div>
-                        <div class="col-md-6">
-                            <?= $form->field($model, 'item_name')->dropDownList($item,['prompt'=>'Select Role']) ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      <?= Html::submitButton('Submit', ['class' => 'btn btn-primary float-right']) ?>
-                    </div>
-                <?php ActiveForm::end(); ?>
-
-            </div><!-- cashier -->
-            </div>
+    <div class="modal fade" id="modal-default">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add AuthAssignment</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-          <!-- /.modal-content -->
+          <div class="modal-body">
+            <div class="cashier">
+
+              <?php $form = ActiveForm::begin(); ?>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <?= $form->field($model, 'user_id')->dropDownList($use,['prompt'=>'Select New User']) ?>
+                      </div>
+                      <div class="col-md-6">
+                          <?= $form->field($model, 'item_name')->dropDownList($item,['prompt'=>'Select Role']) ?>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary float-right']) ?>
+                  </div>
+              <?php ActiveForm::end(); ?>
+
+          </div><!-- cashier -->
+          </div>
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal-content -->
       </div>
-      <!-- /.modal -->
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 <!--Main layout-->
  <div class="content-wrapper">
     <section class="content pt-4">
@@ -80,7 +82,7 @@ $user = User::find()->joinWith('authAssignments')->all();
                     <th>Name</th>
                     <th>Email</th>
                     <th >Auth Assignment</th>
-                    <th class="text-center">isBan/unBan</th>
+                    <!-- <th class="text-center">isBan/unBan</th> -->
                     <th class="text-center">Account Status</th>
                     <th >Action</th>
                   </tr>
@@ -88,29 +90,22 @@ $user = User::find()->joinWith('authAssignments')->all();
                 <tbody>
                   <?php foreach ($user as $use) {?> 
                   <tr>
-                    <td> <?=$use->id ?> </td>
-                    <td> <?=$use->username ?> </td>
-                    <td> <?=$use->email ?> </td>
-                    <td> <?=$use->authAssignments[0]->item_name ?> </td>
-                    <td class="text-center"> 
-                      <?php if($use->isBan == '0') 
-                        echo '<label class="py-2 px-3 badge btn-primary">Not Banned</label>';                      
-                        elseif($use->isBan == '1')
-                        echo '<label class="py-2 px-3 badge btn-danger">Banned</label>'; 
-                        ?>
-                    </td>
-                    <td class="text-center"> 
-                      <?php if($use->status == '10') 
-                        echo '<label class="py-2 px-3 badge btn-primary">Activated</label>';                      
-                        elseif($use->status == '9')
+                    <td> <?=$use->user->id ?> </td>
+                    <td> <?=$use->user->username ?> </td>
+                    <td> <?=$use->user->email ?> </td>
+                    <td> <?=$use->item_name ?> </td>
+                   <td class="text-center"> 
+                      <?php if($use->user->status == '10') 
+                        echo '<label class="py-2 px-3 badge btn-success">Activated</label>';                      
+                        elseif($use->user->status == '9')
                         echo '<label class="py-2 px-3 badge btn-danger">Not Activated</label>'; 
                         ?>
                     </td>
-
                     <td>
-                     <a href="<?=Url::to(['user/update', 'id'=>$use->id])?>"><button type="button" class="badge badge-pill btn-primary px-3 py-2 ">Edit</button></a>
-                     
-                      <a href="#" baseUrl="<?= Yii::$app->request->baseUrl?>" id="<?=$use->id?>" class="badge badge-pill btn-danger px-3 py-2 del"> Delete </a>
+                      <a href="#" baseUrl="<?= Yii::$app->request->baseUrl?>" id="<?=$use->user->id?>" onlick="click()" class="badge badge-pill btn-primary px-3 py-2 activate"> Activate / Deactivate </a>
+                    <!-- <input type="checkbox" baseUrl="<?= Yii::$app->request->baseUrl?>" class="activate" value="<?=$use->user->id?>" status="" checked data-toggle="toggle" data-on="Deactivate" data-off="Activate" data-onstyle="success" data-offstyle="danger" > -->
+                    
+                      <a href="#" baseUrl="<?= Yii::$app->request->baseUrl?>" id="<?=$use->user->id?>" class="badge badge-pill btn-danger px-3 py-2 del"> Delete </a>
                     </td>
                   </tr>            
                  <?php } ?>

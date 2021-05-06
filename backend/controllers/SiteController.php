@@ -76,7 +76,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $this ->layout='auth';
+        
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -121,21 +121,6 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-    
-    /*public function actionCashier()
-    {
-        $model = new Cashier();
-
-        if ($model->load(Yii::$app->request->post())) {
-
-           $model->save();
-            return $this->redirect(['site/users']);
-        }
-
-        return $this->renderAjax('cashier', [
-            'model' => $model,
-        ]);
-    }*/
 
         /**
      * Updates an existing User model.
@@ -150,30 +135,15 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             
-        return $this->redirect(['site/users']);
+        return $this->redirect(['site/cashiers']);
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
     }
-/*    public function actionDelivery()
-    {
-        $model = new \frontend\models\Delivery();
-
-        if ($model->load(Yii::$app->request->post())) 
-            {
-        $model->save();
-        return $this->redirect(['product/create']);
-      
-          }
-
-        return $this->renderAjax('delivery', [
-            'model' => $model,
-        ]);
-    }*/
      /**
-     * Deletes an existing Doctor model.
+     * Deletes an existing Customer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -187,10 +157,10 @@ class SiteController extends Controller
     }
 
     /**
-     * Finds the Doctor model based on its primary key value.
+     * Finds the Customer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Doctor the loaded model
+     * @return Customer the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

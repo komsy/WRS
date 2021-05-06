@@ -17,6 +17,59 @@ $('.delet').click(function(e){
     
     alert(' Delete selected?');
  });
+//Delete Delivery
+$('.komsy').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    var baseUrl = $(this).attr('baseUrl');
+    
+    $.ajax({
+       url: baseUrl+"/delivery/komsy?id="+id,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            console.log(res);
+            alert(res);
+        }
+    });
+    
+    alert(' Delete selected?');
+ });
+/*//Activate User
+$('.activate').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    var baseUrl = $(this).attr('baseUrl');
+    
+    $.ajax({
+       url: baseUrl+"/user/activate?id="+id,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            console.log(res);
+            alert(res);
+        }
+    });
+ });
+*/
+//Delete user
+$('.activate').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    var baseUrl = $(this).attr('baseUrl');
+    
+    $.ajax({
+       url: baseUrl+"/user/activate?id="+id,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            console.log(res);
+            alert(res);
+        }
+    });
+    
+    alert(' Are you sure you want to change the Status of this User?');
+ });
 
 //Delete user
 $('.del').click(function(e){
@@ -75,6 +128,24 @@ $('.deletd').click(function(e){
     alert(' Delete selected?');
  });
 
+//Updated Delivery
+$('.orderupdate').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    var baseUrl = $(this).attr('baseUrl');
+    
+    $.ajax({
+       url: baseUrl+"/product/admin?id="+id,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            console.log(res);
+            alert(res);
+        }
+    });
+    
+ });
+
 //stepper wizzard
 $(document).ready(function () {
 
@@ -119,4 +190,44 @@ $(document).ready(function () {
     $('div.setup-panel div a.btn-success').trigger('click');
 });
 
+/*//Updated Delivery
+$('.orderupdate').click(function(e){
+    e.preventDefault();
+    var id = $(this).attr('id');
+    var baseUrl = $(this).attr('baseUrl');
+    
+    $.ajax({
+       url: baseUrl+"/product/admin?id="+id,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            console.log(res);
+            alert(res);
+        }
+    });
+    
+ });
 
+ $(document).on('click','.action',function(){
+  var id=$(this).data('id');
+  var customer_status=$(this).data('customer_status');
+  var action='change_status';
+  $('#message').html('');
+  if(confirm("Are you sure you want to change the Status of this Member?")){
+    $.ajax({
+      url:'action.php',
+      method:'POST',
+      data:{customer_id:customer_id,customer_status:customer_status,action:action},
+      success:function(data){
+        if(data!=''){
+          load_customers_data();
+          $('#message').html(data);
+        }
+      }
+    })
+  } 
+  else{
+    return false;
+  }  
+ });
+*/

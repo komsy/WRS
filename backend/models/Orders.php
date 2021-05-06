@@ -9,11 +9,10 @@ use Yii;
  *
  * @property int $orderId
  * @property int $userId
- * @property float $totalAmount
  * @property string $orderStatus
  * @property string $createdAt
- * @property int $createdBy
  *
+ * @property Deliveryrecord[] $deliveryrecords
  * @property Orderitems[] $orderitems
  * @property User $user
  */
@@ -33,11 +32,10 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['userId', 'createdBy'], 'required'],
-            [['userId', 'createdBy'], 'integer'],
-            [['totalAmount'], 'number'],
+            [['userId', 'orderStatus'], 'required'],
+            [['userId'], 'integer'],
             [['createdAt'], 'safe'],
-            [['orderStatus'], 'string', 'max' => 200],
+            [['orderStatus'], 'string', 'max' => 50],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
     }
@@ -50,11 +48,19 @@ class Orders extends \yii\db\ActiveRecord
         return [
             'orderId' => 'Order ID',
             'userId' => 'User ID',
-            'totalAmount' => 'Total Amount',
             'orderStatus' => 'Order Status',
             'createdAt' => 'Created At',
-            'createdBy' => 'Created By',
         ];
+    }
+
+    /**
+     * Gets query for [[Deliveryrecords]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDeliveryrecords()
+    {
+        return $this->hasMany(Deliveryrecord::className(), ['orderId' => 'orderId']);
     }
 
     /**

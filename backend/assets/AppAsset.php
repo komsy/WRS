@@ -17,7 +17,8 @@ class AppAsset extends AssetBundle
         'css/adminlte.min.css',
         'css/icheck-bootstrap.min.css',
         'css/tempusdominus-bootstrap-4.min.css',        
-        'css/all.min.css',
+        'css/all.min.css',        
+        'css/bootstrap4-toggle.css',
     ];
     public $js = [
         'js/myscripts.js',
@@ -26,6 +27,7 @@ class AppAsset extends AssetBundle
         'js/bootstrap.bundle.min.js',
         'js/jquery.min.js',
         'js/tempusdominus-bootstrap-4.min.js',
+        'js/bootstrap4-toggle.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

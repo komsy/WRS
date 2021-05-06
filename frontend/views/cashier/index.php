@@ -8,11 +8,17 @@ use yii\bootstrap4\Modal;
 use common\models\User;
 use frontend\models\Product;
 use frontend\models\Pos;
+use yii\jui\AutoComplete;
+
 
 /* @var $this yii\web\View */
 $use = ArrayHelper::map(Product::find()->all(), 'productId', 'productName');
 $list = Pos::find()->where(['status'=>'0'])->all();
+$product = Product::find()->all();
+$session = Yii::$app->session;
+
 ?> 
+
       <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -23,8 +29,8 @@ $list = Pos::find()->where(['status'=>'0'])->all();
               </button>
             </div>
             <div class="modal-body">
-              <div class="cashier">
 
+              <div class="cashier">
                 <?php $form = ActiveForm::begin(); ?>
                     <div class="row">
                         <div class="col-md-6">
@@ -34,17 +40,10 @@ $list = Pos::find()->where(['status'=>'0'])->all();
                           <?= $form->field($model, 'quantity') ?>
                         </div>
                         <div class="col-md-6">
-                          <?= $form->field($model, 'price') ?> 
-                        </div>
-                        <div class="col-md-6">
-                          <?= $form->field($model, 'discountPercentage') ?>
-                        </div>
-                        <div class="col-md-6">
                           <?= $form->field($model, 'createdBy')->hiddenInput(['value' =>Yii::$app->user->id, 'readonly'=>true])->label(false) ?>
                         </div>
                     </div>
                     <div class="form-group">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                       <?= Html::submitButton('Submit', ['class' => 'btn btn-primary float-right']) ?>
                     </div>
                 <?php ActiveForm::end(); ?>
@@ -78,43 +77,78 @@ $list = Pos::find()->where(['status'=>'0'])->all();
 
       <div class="row">
         <div class="col-md-12">
-          <div class="card">
-            <div class="card-body">
-              
-              <table id="datatable" class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Discount</th>
-                    <th >Price</th>
-                    <th>Total Amount</th>
-                    <th>Created At</th>
-                    <th >Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($list as $use) {?> 
-                  <tr>
-                    <td> <?=$use->posId ?> </td>
-                    <td> <?=$use->productName ?> </td>
-                    <td> <?=$use->quantity ?> </td>
-                    <td> <?=$use->discountPercentage ?> </td>
-                    <td> <?=$use->price ?> </td>
-                    <td> <?=$use->totalAmount ?> </td>
-                    <td> <?=$use->createdAt ?> </td>
-                    
-                    <td>
-                    <a href="#" baseUrl="<?= Yii::$app->request->baseUrl?>" id="<?=$use->posId?>" class="badge badge-pill btn-danger px-3 py-2 delete"> Delete </a>
-                    </td>
-                  </tr>            
-                 <?php } ?>
-                </tbody>
-              </table>
-              <!-- pagination  -->               
-              </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card shadow">
+                <div class="card-body"> 
+                <div class="row text-center" >
+                  <div class="col" > 
+                      <button class="btn btn-success info"> Product Prices </button>
+                  </div>
+                </div>             
+                  <table id="datatable" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Product Name</th>
+                        <th>Discount</th>
+                        <th >Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($product as $prod) {?> 
+                      <tr>
+                        <td> <?=$prod->productName ?> </td>
+                        <td> <?=$prod->discount ?>% </td>
+                        <td> Kshs.<?=$prod->unitPrice ?> </td>
+                      </tr>            
+                     <?php } ?>
+                    </tbody>
+                  </table>
+                  <!-- pagination  -->   
+                </div>
+              </div>   
+            </div>
+            <div class="col-md-9">
+              <div class="card shadow">
+                <div class="card-body">              
+                  <table id="datatable" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Discount</th>
+                        <th >Price</th>
+                        <th>Total Amount</th>
+                        <th>Created At</th>
+                        <th >Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($list as $use) {?> 
+                      <tr>
+                        <td> <?=$use->posId ?> </td>
+                        <td> <?=$use->productName ?> </td>
+                        <td> <?=$use->quantity ?> </td>
+                        <td> <?=$use->discountPercentage ?>% </td>
+                        <td> Kshs.<?=$use->price ?> </td>
+                        <td> Kshs.<?=$use->totalAmount ?> </td>
+                        <td> <?=$use->createdAt ?> </td>
+                        
+                        <td>
+                        <a href="#" baseUrl="<?= Yii::$app->request->baseUrl?>" id="<?=$use->posId?>" class="badge badge-pill btn-danger px-3 py-2 delete"> Delete </a>
+                        </td>
+                      </tr>            
+                     <?php } ?>
+                    </tbody>
+                  </table>
+                  <!-- pagination  -->   
+                </div>
+              </div>            
             </div>
           </div>
         </div>
+      </div>
+    </section>
+  </div>
 <!--Main layout-->

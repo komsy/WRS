@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
-    'name' => 'Imperial',
+    'name' => '<i>Imperial </i>',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',

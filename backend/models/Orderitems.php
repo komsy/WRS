@@ -15,8 +15,8 @@ use Yii;
  * @property int $quantity
  * @property int $total
  *
- * @property Product $product
  * @property Orders $order
+ * @property Product $product
  * @property User $user
  */
 class Orderitems extends \yii\db\ActiveRecord
@@ -37,8 +37,8 @@ class Orderitems extends \yii\db\ActiveRecord
         return [
             [['orderId', 'userId', 'productId', 'withCan', 'quantity', 'total'], 'required'],
             [['orderId', 'userId', 'productId', 'withCan', 'quantity', 'total'], 'integer'],
-            [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['productId' => 'productId']],
             [['orderId'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['orderId' => 'orderId']],
+            [['productId'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['productId' => 'productId']],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
     }
@@ -60,16 +60,6 @@ class Orderitems extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Product]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProduct()
-    {
-        return $this->hasOne(Product::className(), ['productId' => 'productId']);
-    }
-
-    /**
      * Gets query for [[Order]].
      *
      * @return \yii\db\ActiveQuery
@@ -77,6 +67,16 @@ class Orderitems extends \yii\db\ActiveRecord
     public function getOrder()
     {
         return $this->hasOne(Orders::className(), ['orderId' => 'orderId']);
+    }
+
+    /**
+     * Gets query for [[Product]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['productId' => 'productId']);
     }
 
     /**

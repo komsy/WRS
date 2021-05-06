@@ -74,7 +74,19 @@ body {
   color: #fff;  
   margin-bottom: 20px;
 }
-
+#logo{
+  height: 40px;
+}
+.info{
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: green;
+  border-radius: 10px;
+  color: white;
+  padding-top: 10px; 
+  font-style: italic;
+  font-weight: bold;
+}
 @media (max-width: 768px) {
   #hero h3 {
     font-size: 24px;

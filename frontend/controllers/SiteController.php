@@ -14,6 +14,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\Customers;
 
 /**
  * Site controller
@@ -101,17 +102,27 @@ class SiteController extends Controller
     }
     public function actionCustomers()
     {
-        $model = new \frontend\models\Customers();
+        $checkbook = Customers::find()->where(['userId'=>Yii::$app->user->id])->one();
+        if(!empty($checkbook)){ //checks if logged patient has created profile 
+            $Msge = '<div class="alert alert-danger alert-dismissable" role="alert">
+                    <h3>You already have a profile continue to order.</h3>
+                     
+                    </div>';
+            \Yii::$app->session->setFlash('error', $Msge);
+            $this->redirect(['product/index']);
+       } else{
+            $model = new \frontend\models\Customers();
 
-        if ($model->load(Yii::$app->request->post())) {
-                
-             $model->save();
-            return $this->redirect(['site/index']);
-            }
+            if ($model->load(Yii::$app->request->post())) {
+                    
+                 $model->save();
+                return $this->redirect(['site/index']);
+                }
 
-        return $this->render('customers', [
-            'model' => $model,
-        ]);
+            return $this->render('customers', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

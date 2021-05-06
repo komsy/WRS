@@ -32,12 +32,13 @@ class CashierController extends \yii\web\Controller
         $model = New Pos();
         
         if($model->load(Yii::$app->request->post())) {
-        $prod = Product::find()->select('productName')->where('productId=:productName')->addParams([':productName' => $model['productName']])->one(); 
-        $total = (100-$model->discountPercentage)/100*$model->price*$model->quantity;
-        $model->productName = $prod->productName;
+        $prod = Product::find()->where('productId=:productName')->addParams([':productName' => $model['productName']])->all(); 
+        
+        $total = (100-$prod[0]->discount)/100*$prod[0]->unitPrice*$model->quantity;
+        $model->productName = $prod[0]->productName;
         $model->quantity = $model->quantity;
-        $model->price = $model->price;
-        $model->discountPercentage = $model->discountPercentage;
+        $model->price = $prod[0]->unitPrice;
+        $model->discountPercentage = $prod[0]->discount;
         $model->createdBy = $model->createdBy;
         $model->totalAmount = $total;
         $model->status = '0';

@@ -71,3 +71,5 @@ $list = Pos::find()->where(['status'=>'1'])->all();
           </div>
         </div>
 <!--Main layout-->
+</section>
+</div>

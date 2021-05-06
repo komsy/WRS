@@ -11,7 +11,8 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use backend\models\Pos;
 use backend\models\Cans;
-use backend\models\ProductImages;
+use backend\models\Delivery;
+use backend\models\Deliveryrecord;
 use yii\base\Model;
 
 /**
@@ -117,6 +118,7 @@ class ProductController extends Controller
     {
         return $this->render('deleted');
     }
+    
     /**
      * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -138,7 +140,20 @@ class ProductController extends Controller
             'model' => $model,
         ]);
     }
+    public function actionAdmin($id)
+    {
+        $model = New Deliveryrecord();
+        if (($model = Deliveryrecord::findOne($id)) !== null) {
+            $data = ['Deliveryrecord'=>['deliveryStatus'=>"Delivered"]];
+                /*var_dump($data); exit();*/
+                if ($model->load($data)){ 
+                    $model->save();
+                    return $this->redirect(['product/orders']);
+                }
+            }
 
+        return false;
+    }
     /**
      * Deletes an existing Product model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

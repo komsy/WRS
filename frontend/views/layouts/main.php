@@ -43,10 +43,10 @@ AppAsset::register($this);
     } else {
         if(\Yii::$app->user->can('User')) {
         $menuItems [] = ['label' => 'Home', 'url' => ['/site/index'] ];
-        $menuItems [] = ['label' => 'Customer', 'url' => ['/site/customers'] ];
         $menuItems [] = ['label' => 'Products', 'url' => ['/product/index'] ];
         $menuItems [] = ['label' => 'My Orders', 'url' => ['/product/orders'] ];
-        $menuItems [] = ['label' => 'About', 'url' => ['/site/about'] ];
+        $menuItems [] = ['label' => 'Order History', 'url' => ['/product/history'] ];
+        
         $menuItems [] = ['label' => 'Contact', 'url' => ['/site/contact'] ];
         $menuItems[] = ['label' => 'Logout ('.Yii::$app->user->identity->username.')',
             'url'=>['site/logout'],
@@ -56,9 +56,15 @@ AppAsset::register($this);
         ];  
        } 
        elseif(\Yii::$app->user->can('Cashier')) {
-        $menuItems [] = ['label' => 'Orders', 'url' => ['/product/orderitems'] ];
+        $menuItems [] = [
+            'label' => 'Orders',
+            'items' => [
+                 ['label' => 'Manage Orders', 'url' => ['/product/orderitems']],
+                 '<div class="dropdown-divider"></div>',
+                 ['label' => 'Order Details', 'url' => ['/product/details']],
+            ],
+      ];
         $menuItems [] = ['label' => 'POS', 'url' => ['/cashier/index'] ];
-        $menuItems [] = ['label' => 'About', 'url' => ['/site/about'] ];
         $menuItems [] = ['label' => 'Contact', 'url' => ['/site/contact'] ];
         $menuItems[] = ['label' => 'Logout ('.Yii::$app->user->identity->username.')',
             'url'=>['site/logout'],
@@ -88,10 +94,11 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="text-center">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+        <p class="text-center">&copy; <?= Html::encode('Imperial') ?> <?= date('Y') ?></p>
     </div>
 </footer>
-
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <?php $this->endBody() ?>
 </body>
 </html>

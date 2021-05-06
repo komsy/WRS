@@ -48,3 +48,11 @@ aside .nav-pills .nav-link.active{
     opacity:0;
 }
 
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
